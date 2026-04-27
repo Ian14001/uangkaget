@@ -27,7 +27,6 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        /* Styling Prank */
         #prank-container {
             background-color: #2d3436;
             animation: shake 0.5s infinite;
@@ -42,7 +41,6 @@
             50% { transform: translate(-1px, 2px) rotate(-1deg); }
         }
 
-        /* Styling Undangan Asli */
         #undangan-container {
             display: none;
             background-color: white;
@@ -74,16 +72,13 @@
             cursor: pointer;
             transition: 0.3s;
             margin-top: 15px;
-            text-decoration: none;
             display: inline-block;
             font-family: inherit;
         }
 
         .btn-prank { background-color: #d63031; }
-        .btn-prank:hover { background-color: #ff7675; transform: scale(1.02); }
-
         .btn-nice { background-color: #25D366; }
-        .btn-nice:hover { background-color: #128C7E; transform: scale(1.02); }
+        .btn-nice:active { transform: scale(0.95); }
 
         .detail-acara {
             text-align: left;
@@ -101,6 +96,14 @@
         }
 
         span.label { font-weight: bold; color: #0984e3; display: block; font-size: 12px; text-transform: uppercase; }
+
+        #counter-text {
+            font-weight: bold;
+            color: #d63031;
+            font-size: 1.2rem;
+            display: block;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -114,48 +117,64 @@
 
     <div id="undangan-container">
         <h2 style="margin-bottom: 5px;">🎓 Seminar Hasil 🎓</h2>
-        <p style="color: #636e72; font-size: 14px;">Bercanda ya Hehe. Mohon doa nya ya teman-teman</p>
+        <p style="color: #636e72; font-size: 14px;">Klik doa 33x buat support mental gue!</p>
         
         <div class="detail-acara">
-            <p><span class="label">Nama Peneliti (Role)</span> <strong>Ridha Ihsan (Tukang Kabel)</strong></p>
-            <p><span class="label">Judul Skripsi</span> <strong>"Analisis Efek Kesetrum Terhadap Keseharian Mahasiswa"</strong></p>
+            <p><span class="label">Nama Peneliti</span> <strong>Ridha Ihsan (Tukang Kabel)</strong></p>
+            <p><span class="label">Judul Skripsi</span> <strong>"Analisis Efek Kesetrum Terhadap Keseharian Sehari-hari"</strong></p>
             <p><span class="label">Hari & Tanggal</span> <strong>Selasa, 28 April 2026</strong></p>
             <p><span class="label">Waktu</span> <strong>13.00 WIB - Dosen Selesai Nanya</strong></p>
             <p><span class="label">Lokasi</span> <strong>Dimana Weh</strong></p>
         </div>
 
-        <p style="font-size: 13px;">Doa dan Support kalian sangat membantu mental gue biar nggak kena mental pas ditanya dosen🙏🏻</p>
+        <div id="counter-display" style="margin-bottom: 10px;">
+            Target Doa: <span id="counter-text">0/33</span>
+        </div>
         
-        <button onclick="tutupHalaman()" class="btn btn-nice">Doa 99x 🔥</button>
+        <button id="btn-doa" onclick="hitungDoa()" class="btn btn-nice">Klik Untuk Berdoa 🔥</button>
     </div>
 
     <script>
+        let jumlahKlik = 0;
+        const targetKlik = 33;
+
         function bukaUndangan() {
-            // Ubah background jadi biru ceria
             document.body.style.backgroundColor = "#74b9ff";
-            
-            // Sembunyikan prank, tampilkan undangan
             document.getElementById('prank-container').style.display = 'none';
             document.getElementById('undangan-container').style.display = 'block';
         }
 
+        function hitungDoa() {
+            jumlahKlik++;
+            const counterText = document.getElementById('counter-text');
+            const btnDoa = document.getElementById('btn-doa');
+            
+            // Update teks counter
+            counterText.innerText = `${jumlahKlik}/${targetKlik}`;
+
+            // Efek warna kalau sudah mau selesai
+            if (jumlahKlik >= 20) counterText.style.color = "#25D366";
+
+            if (jumlahKlik >= targetKlik) {
+                btnDoa.innerText = "AAMIIN! (MENUTUP...)";
+                btnDoa.disabled = true;
+                tutupHalaman();
+            }
+        }
+
         function tutupHalaman() {
-            // Mencoba menutup jendela
+            // Coba tutup tab
             window.close();
 
-            /* CATATAN: Browser sering memblokir window.close() demi keamanan. 
-               Sebagai gantinya, jika gagal menutup, kita buat layar jadi kosong 
-               agar terlihat seperti aplikasinya sudah selesai.
-            */
+            // Cadangan jika browser melarang window.close()
             setTimeout(function() {
                 if (!window.closed) {
-                    // Jika tab masih terbuka, arahkan ke halaman kosong
-                    document.body.innerHTML = "";
+                    document.body.innerHTML = "<div style='color:black; text-align:center;'><h1>Aamiin!</h1><p>Makasih doanya 33x, moga berkah!</p></div>";
                     document.body.style.backgroundColor = "white";
-                    alert("Aamiin! Makasih doanya. Halaman sudah selesai.");
+                    alert("Terima kasih doanya! Halaman akan dibersihkan.");
                     window.location.href = "about:blank";
                 }
-            }, 200);
+            }, 500);
         }
     </script>
 </body>
