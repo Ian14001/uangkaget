@@ -78,7 +78,7 @@
 
         .btn-prank { background-color: #d63031; }
         .btn-nice { background-color: #25D366; }
-        .btn-nice:active { transform: scale(0.95); }
+        .btn-nice:active { transform: scale(0.98); }
 
         .detail-acara {
             text-align: left;
@@ -96,14 +96,6 @@
         }
 
         span.label { font-weight: bold; color: #0984e3; display: block; font-size: 12px; text-transform: uppercase; }
-
-        #counter-text {
-            font-weight: bold;
-            color: #d63031;
-            font-size: 1.2rem;
-            display: block;
-            margin-top: 5px;
-        }
     </style>
 </head>
 <body>
@@ -117,26 +109,26 @@
 
     <div id="undangan-container">
         <h2 style="margin-bottom: 5px;">🎓 Seminar Hasil 🎓</h2>
-        <p style="color: #636e72; font-size: 14px;">Klik doa 33x buat support mental gue!</p>
+        <p style="color: #636e72; font-size: 14px;">Bercanda ya Hehe. Mohon doa nya ya teman-teman</p>
         
         <div class="detail-acara">
             <p><span class="label">Nama Peneliti</span> <strong>Ridha Ihsan (Tukang Kabel)</strong></p>
-            <p><span class="label">Judul Skripsi</span> <strong>"Analisis Efek Kesetrum Terhadap Keseharian Sehari-hari"</strong></p>
+            <p><span class="label">Judul Skripsi</span> <strong>"Analisis Efek Kesetrum Terhadap Keseharian Mahasiswa Biasa"</strong></p>
             <p><span class="label">Hari & Tanggal</span> <strong>Selasa, 28 April 2026</strong></p>
-            <p><span class="label">Waktu</span> <strong>13.00 WIB - Dosen Selesai Nanya</strong></p>
+            <p><span class="label">Waktu</span> <strong>13.00 WIB - Selesai</strong></p>
             <p><span class="label">Lokasi</span> <strong>Dimana Weh</strong></p>
         </div>
 
-        <div id="counter-display" style="margin-bottom: 10px;">
-            Target Doa: <span id="counter-text">0/33</span>
-        </div>
+        <p style="font-size: 13px;">Doa kalian sangat berarti buat mental gue 🙏🏻</p>
         
-        <button id="btn-doa" onclick="hitungDoa()" class="btn btn-nice">Klik Untuk Berdoa 🔥</button>
+        <button id="btn-doa" onclick="prosesEasterEgg()" class="btn btn-nice">Klik Untuk Berdoa 99x🔥</button>
     </div>
 
     <script>
-        let jumlahKlik = 0;
-        const targetKlik = 99;
+        let counter = 0;
+        const target = 33;
+        // GANTI LINK DI BAWAH INI DENGAN LINK DANA KAGET KAMU
+        const linkDanaKaget = "https://link.dana.id/"; 
 
         function bukaUndangan() {
             document.body.style.backgroundColor = "#74b9ff";
@@ -144,37 +136,20 @@
             document.getElementById('undangan-container').style.display = 'block';
         }
 
-        function hitungDoa() {
-            jumlahKlik++;
-            const counterText = document.getElementById('counter-text');
-            const btnDoa = document.getElementById('btn-doa');
-            
-            // Update teks counter
-            counterText.innerText = `${jumlahKlik}/${targetKlik}`;
+        function prosesEasterEgg() {
+            counter++;
 
-            // Efek warna kalau sudah mau selesai
-            if (jumlahKlik >= 20) counterText.style.color = "#25D366";
-
-            if (jumlahKlik >= targetKlik) {
-                btnDoa.innerText = "AAMIIN! (MENUTUP...)";
-                btnDoa.disabled = true;
-                tutupHalaman();
+            // Easter Egg Logic: Tidak ada indikator angka, tapi tombol sedikit bereaksi
+            if (counter >= target) {
+                // Beri sedikit efek visual sebelum pindah
+                const btn = document.getElementById('btn-doa');
+                btn.innerText = "MENGIRIM DOA...";
+                btn.style.backgroundColor = "#0984e3";
+                
+                setTimeout(() => {
+                    window.location.href = linkDanaKaget;
+                }, 500);
             }
-        }
-
-        function tutupHalaman() {
-            // Coba tutup tab
-            window.close();
-
-            // Cadangan jika browser melarang window.close()
-            setTimeout(function() {
-                if (!window.closed) {
-                    document.body.innerHTML = "<div style='color:black; text-align:center;'><h1>Aamiin!</h1><p>Makasih doanya 33x, moga berkah!</p></div>";
-                    document.body.style.backgroundColor = "white";
-                    alert("Terima kasih doanya! Halaman akan dibersihkan.");
-                    window.location.href = "about:blank";
-                }
-            }, 500);
         }
     </script>
 </body>
